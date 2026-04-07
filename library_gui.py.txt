@@ -1,0 +1,475 @@
+import webbrowser
+import tkinter as tk
+import tkinter.ttk as ttk
+import tkinter.font as tkfont
+import EasyReady_ui as easyReadyUI
+
+######################################################
+# i18n , 顯示不同語言的字串訊息
+class I18N:
+    def __init__(self, translations, default="zh_tw"):
+        self.translations = translations
+        self.lang = default
+
+    def set_lang(self, lang):
+        if lang in self.translations:
+            self.lang = lang
+
+    def tr(self, key):
+        return self.translations.get(self.lang, {}).get(key, key)
+
+
+######################################################
+# i18n 自串表
+TRANSLATIONS = {
+    "zh_tw": {
+        "MSG_ONLINE": ">連線至網際網路的伺服器進行多人遊戲, 就像當年 Gazillion 官方遊戲一樣 (舊帳號已不存在). 只需取得遊戲軟體, 挑個伺服器申請帳號就能玩.\n",
+        "MSG_OFFLINE": ">在自己的電腦上玩單機版遊戲, 不需連線網際網路也能玩. 自己就是 GM 掌握各種作弊權力. 需要取得遊戲軟體, 並安裝 MHServerEMU.\n",
+        "MSG_LAN_SERVER": ">安裝遊戲伺服器, 供區域網路的電腦連線多人遊玩. 區域網路包括: 家庭網路, 學校宿網, 公司內網... 需要一台電腦安裝單機版, 其它電腦比照網路版設定.\n",
+        "TITLE_MENU": "[ 選單 ]",
+        "TITLE_NOTE": "[ 狀態/訊息 ]",
+        "TITLE_STEP": "[ 進程 ]",
+        "RB_ONLINE": "設置網路版遊戲",
+        "RB_OFFLINE": "設置單機版遊戲",
+        "RB_LAN_SERVER": "設置區網伺服器",
+        "MENU_ZH_TW": "繁體中文",
+        "MENU_EN_US": "English",
+        "BTN_GO": "開始",
+        "BTN_NEXT": "下一步",
+        "PATH_BTN": "瀏覽...",
+        "BTN_RE": "重測",
+        "LAB_A1": "1-1. 遊戲資料夾在哪裡",
+        "LAB_A2": "1-2. 遊戲需求與電腦狀況",
+        "LAB_A3": "1-3. 安裝網路版遊戲",
+        "LAB_B1": "2-2. 本機網路服務狀況",
+        "LAB_B2": "2-1. 下載 MHServerEMU",
+        "LAB_B3": "2-3. 安裝單機版遊戲",
+        "LAB_C1": "3-1. 選擇伺服器 IP",
+        "LAB_C2": "3-2. 安裝區網伺服器",
+        ###########################################################################
+        "MSG_A1_1": ">目前 MarvelHeroes Omega 遊戲有兩個公開下載點:\n (本遊戲經歷多次改版, 在此使用遊戲版本 2.16a [檔案版本 1.52.0.1700])\n\n>  ",
+        "MSG_A1_2": "https://steamdb.info/app/226320/info/",
+        "MSG_A1_3": "\n 在 Steam 擁有有本遊戲才能下載, 預設的安裝路徑可能是:\n C:\\Program Files (x86)\\Steam\\steamapps\\common\\{Marvel Heroes Omega}\n\n>  ",
+        "MSG_A1_4": "https://archive.org/",
+        "MSG_A1_5": "\n 搜尋 \"omega 2.16a\", 建議下載後解壓縮至 C:\\, D:\\ 等根目錄.\n",
+        "MSG_A1_6": "\n 圖中的灰色區塊就是{遊戲資料夾}, 裡面必須完整包含藍色區塊的三個資料夾.\n {遊戲資料夾}可以任意更名, 也可以搬移至其它位置.\n\n",
+        "MSG_A1_7": ">請[瀏覽...]指出你的{遊戲資料夾}所在路徑, 以進行安裝.\n",
+        "MSG_A1_8": " >已確認{遊戲資料夾}, 請[下一步].\n",
+        "MSG_A1_9": " >這不是{遊戲資料夾}, 請[瀏覽...]重選.\n",
+
+    },
+    "en_us": {
+        "MSG_ONLINE": ">Connect to an online server for multiplayer gameplay, similar to the official Gazillion game back in the day (old accounts no longer exist). You just need to obtain the game software and choose a server to register an account to play.\n",
+        "MSG_OFFLINE": ">Play the single-player version of the game on your own computer. No internet connection is required. You are the GM with full control over various cheat powers. You will need to obtain the game software and install MHServerEMU.\n",
+        "MSG_LAN_SERVER": ">Install a game server to allow multiple computers on a local area network to play together. Local networks include: home networks, school dorm networks, company intranets, etc. One computer needs to have the single-player version installed, and other computers follow the online version setup.\n",
+        "TITLE_MENU": "[ Menu ]",
+        "TITLE_NOTE": "[ Status / Info ]",
+        "TITLE_STEP": "[ Workflow ]",
+        "RB_ONLINE": "Setup Online Game",
+        "RB_OFFLINE": "Setup Offline Game",
+        "RB_LAN_SERVER": "Setup LAN Server",
+        "MENU_ZH_TW": "Trad. Chinese",
+        "MENU_EN_US": "English",
+        "BTN_GO": "GO!",
+        "BTN_NEXT": "Next",
+        "PATH_BTN": "Browse...",
+        "BTN_RE": "Recheck",
+        "LAB_A1": "1-1. Where is the game folder",
+        "LAB_A2": "1-2. Requirements & system status",
+        "LAB_A3": "1-3. Setup online mode",
+        "LAB_B1": "2-2. Local network service status",
+        "LAB_B2": "2-1. Download MHServerEMU",
+        "LAB_B3": "2-3. Setup offline mode",
+        "LAB_C1": "3-1. Select server IP",
+        "LAB_C2": "3-2. Setup Lan server",
+    }
+}
+
+
+######################################################
+# text 文字的特效表
+TAG_STYLES = {
+    "normal": {},
+    "green": {"foreground": "green"},
+    "orange": {"foreground": "orange"},
+    "red": {"foreground": "red"},
+    "blue": {"foreground": "blue"},
+    "white": {"foreground": "white"},
+    "mark": {"background": "yellow"},
+    "highlight": {"foreground": "white", "background": "black"},
+    "strikethrough": {"foreground": "gray", "overstrike": True},
+    "link": {"foreground": "blue", "underline": True},
+}
+
+
+###################################################################
+# 在 text 的顯示操作
+class Logger:
+    def __init__(self, text_widget, i18n):
+        self.text = text_widget
+        self.i18n = i18n
+        self.img = None
+        self.images = []
+        self._setup_tags()
+
+    def _setup_tags(self):
+        for tag, style in TAG_STYLES.items():
+            # self.text.tag_config(tag, **style)
+            self.text.tag_config(
+                tag,
+                spacing1=0,  # 段落上方間距
+                spacing2=3,  # 行與行（包含自動換行）
+                spacing3=3,  # 段落下方間距
+                **style
+            )
+
+    ### 顯示圖片 ###############################################
+    def log_image(self, img_or_file, pad_x=0):
+        self.text.config(state="normal")
+
+        if isinstance(img_or_file, str):
+            img = tk.PhotoImage(file=img_or_file)
+        else:
+            img = img_or_file
+
+        if not hasattr(self, "images"):
+            self.images = []
+        self.images.append(img)
+
+        bg = self.text.cget("bg")                           # 取得 Text 背景色
+        frame = tk.Frame(self.text, bg=bg)                  # 容器（背景同步）
+
+        spacer = tk.Frame(frame, width=pad_x, bg=bg)        # spacer（背景同步）
+        spacer.pack(side="left")
+
+        label = tk.Label(frame, image=img, bd=0, bg=bg)     # 圖片（背景同步）
+        label.pack(side="left")
+
+        self.text.window_create("end", window=frame)
+        self.text.insert("end", "\n")
+
+        self.text.see("end")
+        self.text.config(state="disabled")
+
+    #### 顯示 MESSAGE ##############################################
+    def log(self, message, *args, tag="normal", link=None, raw=False, **kwargs):
+        """
+           message: i18n 的 key 或原始字串
+           *args: 用於 % 格式化的變數 (例如 "apple")
+           **kwargs: 用於 .format() 格式化的變數 (例如 name="apple")
+        """
+        msg = message if raw else self.i18n.tr(message)
+        try:
+            if args:
+                msg = msg % args
+            if kwargs:
+                msg = msg.format(**kwargs)
+        except Exception as e:
+            msg = f"{msg} (Format Error: {e})"
+
+        self.text.config(state="normal", wrap="word")
+
+        if link:  # 帶 link 的訊息
+            tag_name = f"link_{hash(link)}"
+            self.text.tag_config(tag_name, foreground="blue", underline=True)
+
+            def callback(_event, url=link):
+                webbrowser.open(url)
+
+            self.text.tag_bind(tag_name, "<Button-1>", callback)
+            self.text.tag_bind(tag_name, "<Enter>", lambda e: self.text.config(cursor="hand2"))
+            self.text.tag_bind(tag_name, "<Leave>", lambda e: self.text.config(cursor=""))
+
+            self.text.insert("end", msg, (tag, tag_name))
+        else:
+            self.text.insert("end", msg, tag)
+
+        self.text.see("end")
+        self.text.config(state="disabled")
+
+    #### 插入分隔線 ###############################
+    def insert_separator(self, height=2, color="#c0c0c0"):
+        self.text.config(state="normal")
+
+        self.text.insert("end", "\n")  # 單純換行
+        self.text.update_idletasks()
+
+        text_width = self.text.winfo_width()
+        sep = tk.Frame(self.text, height=height, bg=color, width=text_width)
+        self.text.window_create("end", window=sep)
+
+        self.text.insert("end", "\n")  # 分隔線後換行
+        self.text.config(state="disabled")
+
+    #### 清除 TEXT 內容 ###############################
+    def clear(self):
+        self.text.config(state="normal")
+        self.text.delete("1.0", "end")
+        self.text.config(state="disabled")
+
+
+######################################################
+# 主 UI
+class AppUI(easyReadyUI.AppUIUI):
+    def __init__(self, master=None, online_func=None, offline_func=None, lan_func=None):
+        self.i18n = I18N(TRANSLATIONS)
+        super().__init__(master, translator=self.i18n.tr)
+        self._init_global_font()
+
+        self.solutions = {
+            "online": online_func,
+            "offline": offline_func,
+            "lanhost": lan_func
+        }
+
+        self.logger = Logger(self.text_r, self.i18n)
+        self.text_r.configure(yscrollcommand=self.scrollbar_1.set)
+        self.scrollbar_1.configure(command=self.text_r.yview)
+
+        self.lang_codes = ["zh_tw", "en_us"]
+        self._setup_lang_cbox()
+        self.cbox_lang.bind("<<ComboboxSelected>>", self.on_language_changed)
+
+        self.check_mode()
+        self._init_steps()                                                    # step 控制
+        self._hide_all_steps()                                                # 隱藏所有 step frame
+        self._init_step_icons()                                               # 圖示初始化
+        self._init_status_icons()                                             # 圖示初始化
+
+        self.path_btn_a1.bind("<<PathChooserPathChanged>>", self.on_path_changed)
+
+    #### 截取 路徑瀏覽器 的目標 #########################################
+    def on_path_changed(self, event=None):
+        selected_path = self.path_btn_a1.cget("path")                         # 關鍵：使用 cget("path") 獲取元件目前存儲的路徑
+        if selected_path:
+            import EasyReady
+            EasyReady.game_folder_check(selected_path, self)                  # 偵測{選定資料夾}是否為遊戲資料夾, 呼叫 EasyReady.py 裡的 game_folder_check()
+
+    def _init_steps(self):
+        self.steps = [
+            self.frame_a1,
+            self.frame_a2,
+            self.frame_a3,
+            self.frame_b1,
+            self.frame_b2,
+            self.frame_b3,
+            self.frame_c1,
+            self.frame_c2,
+        ]
+
+    def _hide_all_steps(self):                      # 隱藏所有 step frame
+        for f in self.steps:
+            f.grid_remove()
+
+    def show_step(self, step):                      # 參數可以是 index 或 frame_id (frame_a1...)
+        if isinstance(step, int):
+            if 0 <= step < len(self.steps):
+                frame = self.steps[step]
+            else:
+                return
+        else:
+            frame = step
+        frame.grid()
+
+    #### 參數: index 或 step_frame id ############################################
+    def disable_step(self, step):
+
+        if isinstance(step, int):                              # 取得 frame
+            if not (0 <= step < len(self.steps)):
+                return
+            frame = self.steps[step]
+        else:
+            frame = step
+
+        if getattr(frame, "_disabled", False):                # 避免重複 disable
+            return
+        frame._disabled = True
+
+        def _disable(widget):                                 # disable 所有子元件
+            for child in widget.winfo_children():
+                try:
+                    child.configure(state="disabled")
+                except tk.TclError:
+                    pass
+                _disable(child)
+        _disable(frame)
+
+        def _fade_text(widget):                               # 文字變淡
+            for child in widget.winfo_children():
+                try:
+                    child.configure(foreground="#b0b0b0")
+                except tk.TclError:
+                    pass
+                _fade_text(child)
+        _fade_text(frame)
+
+    def _setup_lang_cbox(self):
+        tr = self.i18n.tr
+        values = [tr("MENU_ZH_TW"), tr("MENU_EN_US")]
+        self.cbox_lang.configure(values=values)
+        idx = self.lang_codes.index(self.i18n.lang)
+        self.cbox_lang.current(idx)
+
+    def toggle_frame_lu(self, enable=True):
+        frame = self.frame_lu
+
+        def _set_state(widget):                                             # 遞迴設定子元件狀態
+            for child in widget.winfo_children():
+                if child == self.cbox_lang:
+                    continue
+                try:
+                    child.configure(state="normal" if enable else "disabled")
+                except tk.TclError:
+                    pass
+                _set_state(child)
+        _set_state(frame)
+
+        def _set_text_color(widget):                                        # 遞迴設定文字顏色
+            for child in widget.winfo_children():
+                if child == self.cbox_lang:
+                    continue
+                try:
+                    child.configure(foreground="black" if enable else "#b0b0b0")
+                except tk.TclError:
+                    pass
+                _set_text_color(child)
+        _set_text_color(frame)
+
+    def _init_step_icons(self):
+        self.step_icons = [
+            self.lab_icon_a1,
+            self.lab_icon_a2,
+            self.lab_icon_a3,
+            self.lab_icon_b1,
+            self.lab_icon_b2,
+            self.lab_icon_b3,
+            self.lab_icon_c1,
+            self.lab_icon_c2,
+        ]
+        self._icon_cache = {}  # PhotoImage cache
+
+    def _init_status_icons(self):
+        self.status_icon_paths = {
+            "null": "C:\\Python\\EasyReady\\image\\null_30.png",
+            "ok": "C:\\Python\\EasyReady\\image\\true_30.png",
+            "error": "C:\\Python\\EasyReady\\image\\false_30.png",
+        }
+
+    def _get_icon_label(self, step):
+        if isinstance(step, int):
+            if 0 <= step < len(self.step_icons):
+                return self.step_icons[step]
+            return None
+
+        if step in self.steps:
+            idx = self.steps.index(step)
+            return self.step_icons[idx]
+        return None
+
+    #### step: index/frame_a1, ststus: null/ok/error #############
+    def set_step_status(self, step, status):
+        label = self._get_icon_label(step)
+        if not label:
+            return
+
+        path = self.status_icon_paths.get(status)
+        if not path:
+            return
+
+        # cache image
+        if path not in self._icon_cache:
+            try:
+                img = tk.PhotoImage(file=path, master=self.mainwindow)
+                self._icon_cache[path] = img
+            except tk.TclError:
+                return
+
+        img = self._icon_cache[path]
+        label.configure(image=img)
+        label.image = img  # 防止被回收
+
+    def on_language_changed(self, event=None):
+        _ = event
+        idx = self.cbox_lang.current()
+        new_lang = self.lang_codes[idx]
+
+        if new_lang != self.i18n.lang:
+            self.i18n.set_lang(new_lang)
+            self.retranslate_ui()
+
+    def retranslate_ui(self):
+        tr = self.i18n.tr
+
+        self.frame_lu.configure(text=tr("TITLE_MENU"))
+        self.frame_ld.configure(text=tr("TITLE_STEP"))
+        self.frame_r.configure(text=tr("TITLE_NOTE"))
+
+        self.radio_bt1.configure(text=tr("RB_ONLINE"))
+        self.radio_bt2.configure(text=tr("RB_OFFLINE"))
+        self.radio_bt3.configure(text=tr("RB_LAN_SERVER"))
+
+        self.lab_txt_a1.configure(text=tr("LAB_A1"))
+        self.lab_txt_a2.configure(text=tr("LAB_A2"))
+        self.lab_txt_a3.configure(text=tr("LAB_A3"))
+        self.lab_txt_b1.configure(text=tr("LAB_B1"))
+        self.lab_txt_b2.configure(text=tr("LAB_B2"))
+        self.lab_txt_b3.configure(text=tr("LAB_B3"))
+        self.lab_txt_c1.configure(text=tr("LAB_C1"))
+        self.lab_txt_c2.configure(text=tr("LAB_C2"))
+
+        self.button_1.configure(text=tr("BTN_GO"))
+        for name in ["btn_a1", "btn_a2", "btn_b1", "btn_b2", "btn_c1"]:
+            btn = getattr(self, name, None)
+            if btn:
+                btn.configure(text=tr("BTN_NEXT"))
+
+        if hasattr(self, "btn_b2_re"):
+            self.btn_b2_re.configure(text=tr("BTN_RE"))
+
+        if hasattr(self, "path_btn_a1"):
+            self.path_btn_a1.configure(text=tr("PATH_BTN"))
+
+        self._setup_lang_cbox()
+        self.check_mode()
+
+    def check_mode(self):
+        mode = self.v_selected.get()
+        self.logger.clear()
+
+        if mode == "offline":
+            self.logger.log("MSG_OFFLINE")
+        elif mode == "lanhost":
+            self.logger.log("MSG_LAN_SERVER")
+        else:
+            self.logger.log("MSG_ONLINE")
+
+    def on_go_clicked(self):
+        self.logger.insert_separator()
+        mode = self.v_selected.get()
+        func = self.solutions.get(mode)
+
+        if func:
+            func()
+        else:
+            print(f"Executing: {mode}")
+
+    @staticmethod
+    def _init_global_font():
+        default_font = tkfont.nametofont("TkDefaultFont")
+        family = default_font.cget("family")
+
+        default_font.configure(size=9)
+        tkfont.nametofont("TkTextFont").configure(size=9)
+        tkfont.nametofont("TkMenuFont").configure(size=9)
+        tkfont.nametofont("TkHeadingFont").configure(size=9)
+        tkfont.nametofont("TkFixedFont").configure(size=9)
+
+        style = ttk.Style()
+        style.configure(".", font=(family, 9))
+
+
+######################################################
+# 測試
+if __name__ == "__main__":
+    app = AppUI()
+    app.run()

@@ -1,0 +1,576 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.5" author="PygubuDesigner 0.41.4">
+  <project>
+    <settings>
+      <setting id="name">W.C.C.</setting>
+      <setting id="description">.</setting>
+      <setting id="template">codescript</setting>
+      <setting id="main_widget">tk01</setting>
+      <setting id="module_namespace" />
+      <setting id="module_name">EasyReady_</setting>
+      <setting id="main_classname">AppUI</setting>
+      <setting id="output_dir" />
+      <setting id="builder_namespace">custom_widgets</setting>
+      <setting id="output_dir2" />
+      <setting id="generate_code_onsave">False</setting>
+      <setting id="use_i18n">True</setting>
+      <setting id="all_ids_attributes">False</setting>
+      <setting id="import_tkvariables">False</setting>
+      <setting id="use_ttk_styledefinition_file">False</setting>
+      <setting id="use_window_centering_code">False</setting>
+      <setting id="ttk_style_definition_file" />
+    </settings>
+    <customwidgets />
+    <resources />
+  </project>
+  <object class="tk.Tk" id="tk01" named="True">
+    <property name="height">700</property>
+    <property name="width">1024</property>
+    <containerlayout manager="grid">
+      <property type="col" id="1" name="weight">1</property>
+      <property type="row" id="1" name="minsize">560</property>
+      <property type="row" id="1" name="weight">1</property>
+    </containerlayout>
+    <child>
+      <object class="ttk.Labelframe" id="frame_lu" named="True">
+        <property name="height">140</property>
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">TITLE_MENU</property>
+        <property name="width">380</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="row">0</property>
+          <property name="sticky">nw</property>
+        </layout>
+        <containerlayout manager="grid">
+          <property name="anchor">w</property>
+          <property name="propagate">false</property>
+          <property type="col" id="0" name="weight">1</property>
+          <property type="row" id="3" name="weight">1</property>
+        </containerlayout>
+        <child>
+          <object class="ttk.Radiobutton" id="radio_bt1" named="True">
+            <property name="command" type="command" cbtype="simple">check_mode</property>
+            <property name="takefocus">true</property>
+            <property name="text" translatable="yes">RB_ONLINE</property>
+            <property name="value">online</property>
+            <property name="variable">string:v_selected</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="padx">30 0</property>
+              <property name="pady">6</property>
+              <property name="row">0</property>
+              <property name="sticky">w</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Radiobutton" id="radio_bt2" named="True">
+            <property name="command" type="command" cbtype="simple">check_mode</property>
+            <property name="takefocus">true</property>
+            <property name="text" translatable="yes">RB_OFFLINE</property>
+            <property name="value">offline</property>
+            <property name="variable">string:v_selected</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="padx">30 0</property>
+              <property name="pady">6</property>
+              <property name="row">1</property>
+              <property name="sticky">w</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Radiobutton" id="radio_bt3" named="True">
+            <property name="command" type="command" cbtype="simple">check_mode</property>
+            <property name="takefocus">true</property>
+            <property name="text" translatable="yes">RB_LAN_SERVER</property>
+            <property name="value">lanhost</property>
+            <property name="variable">string:v_selected</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="padx">30 0</property>
+              <property name="pady">6</property>
+              <property name="row">2</property>
+              <property name="sticky">w</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Combobox" id="cbox_lang" named="True">
+            <property name="state">readonly</property>
+            <property name="takefocus">true</property>
+            <property name="textvariable">string:lang_var</property>
+            <property name="values">MENU_ZH_TW MENU_EN_US</property>
+            <property name="width">12</property>
+            <layout manager="grid">
+              <property name="column">1</property>
+              <property name="row">0</property>
+              <property name="sticky">e</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Button" id="button_1" named="True">
+            <property name="command" type="command" cbtype="simple">on_go_clicked</property>
+            <property name="takefocus">true</property>
+            <property name="text" translatable="yes">BTN_GO</property>
+            <property name="width">12</property>
+            <layout manager="grid">
+              <property name="column">1</property>
+              <property name="row">2</property>
+              <property name="sticky">e</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Labelframe" id="frame_ld" named="True">
+        <property name="height">560</property>
+        <property name="text" translatable="yes">TITLE_STEP</property>
+        <property name="width">380</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="row">1</property>
+          <property name="sticky">nw</property>
+        </layout>
+        <containerlayout manager="grid">
+          <property name="anchor">nw</property>
+        </containerlayout>
+        <child>
+          <object class="ttk.Frame" id="frame_a1" named="True">
+            <property name="height">67</property>
+            <property name="width">380</property>
+            <layout manager="grid">
+              <property name="sticky">ew</property>
+            </layout>
+            <containerlayout manager="grid">
+              <property name="propagate">false</property>
+              <property type="col" id="1" name="weight">1</property>
+            </containerlayout>
+            <child>
+              <object class="ttk.Label" id="lab_icon_a1" named="True">
+                <property name="image">null_30.png</property>
+                <layout manager="grid">
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                  <property name="rowspan">2</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Label" id="lab_txt_a1" named="True">
+                <property name="text" translatable="yes">LAB_A1</property>
+                <layout manager="grid">
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                  <property name="rowspan">2</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="pygubu.widgets.PathChooserButton" id="path_btn_a1" named="True">
+                <property name="mustexist">true</property>
+                <property name="path">path_var</property>
+                <property name="takefocus">true</property>
+                <property name="text" translatable="yes">PATH_BTN</property>
+                <property name="type">directory</property>
+                <property name="width">9</property>
+                <layout manager="grid">
+                  <property name="column">2</property>
+                  <property name="row">0</property>
+                  <property name="sticky">e</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Button" id="btn_a1" named="True">
+                <property name="command" type="command" cbtype="simple">on_a1_clicked</property>
+                <property name="takefocus">true</property>
+                <property name="text" translatable="yes">BTN_NEXT</property>
+                <property name="width">9</property>
+                <layout manager="grid">
+                  <property name="column">2</property>
+                  <property name="row">1</property>
+                  <property name="sticky">e</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="frame_a2" named="True">
+            <property name="height">67</property>
+            <property name="width">380</property>
+            <layout manager="grid">
+              <property name="row">1</property>
+              <property name="sticky">ew</property>
+            </layout>
+            <containerlayout manager="grid">
+              <property name="anchor">w</property>
+              <property name="propagate">false</property>
+              <property type="col" id="1" name="weight">1</property>
+            </containerlayout>
+            <child>
+              <object class="ttk.Label" id="lab_icon_a2" named="True">
+                <property name="image">null_30.png</property>
+                <layout manager="grid">
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Label" id="lab_txt_a2" named="True">
+                <property name="text" translatable="yes">LAB_A2</property>
+                <layout manager="grid">
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Button" id="btn_a2" named="True">
+                <property name="command" type="command" cbtype="simple">on_a2_clicked</property>
+                <property name="takefocus">true</property>
+                <property name="text" translatable="yes">BTN_NEXT</property>
+                <property name="width">9</property>
+                <layout manager="grid">
+                  <property name="column">2</property>
+                  <property name="row">0</property>
+                  <property name="sticky">e</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="frame_a3" named="True">
+            <property name="height">67</property>
+            <property name="width">380</property>
+            <layout manager="grid">
+              <property name="row">2</property>
+              <property name="sticky">ew</property>
+            </layout>
+            <containerlayout manager="grid">
+              <property name="anchor">w</property>
+              <property name="propagate">false</property>
+              <property type="col" id="1" name="weight">1</property>
+            </containerlayout>
+            <child>
+              <object class="ttk.Label" id="lab_icon_a3" named="True">
+                <property name="image">null_30.png</property>
+                <layout manager="grid">
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Label" id="lab_txt_a3" named="True">
+                <property name="text" translatable="yes">LAB_A3</property>
+                <layout manager="grid">
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="frame_b1" named="True">
+            <property name="height">67</property>
+            <property name="width">380</property>
+            <layout manager="grid">
+              <property name="row">3</property>
+              <property name="sticky">ew</property>
+            </layout>
+            <containerlayout manager="grid">
+              <property name="anchor">w</property>
+              <property name="propagate">false</property>
+              <property type="col" id="1" name="weight">1</property>
+            </containerlayout>
+            <child>
+              <object class="ttk.Label" id="lab_icon_b1" named="True">
+                <property name="image">null_30.png</property>
+                <layout manager="grid">
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Label" id="lab_txt_b1" named="True">
+                <property name="text" translatable="yes">LAB_B1</property>
+                <layout manager="grid">
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Button" id="btn_b1" named="True">
+                <property name="command" type="command" cbtype="simple">on_b1_clicked</property>
+                <property name="takefocus">true</property>
+                <property name="text" translatable="yes">BTN_NEXT</property>
+                <property name="width">9</property>
+                <layout manager="grid">
+                  <property name="column">2</property>
+                  <property name="row">0</property>
+                  <property name="sticky">e</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="frame_b2" named="True">
+            <property name="height">67</property>
+            <property name="width">380</property>
+            <layout manager="grid">
+              <property name="row">4</property>
+              <property name="sticky">ew</property>
+            </layout>
+            <containerlayout manager="grid">
+              <property name="anchor">w</property>
+              <property name="propagate">false</property>
+              <property type="col" id="1" name="weight">1</property>
+            </containerlayout>
+            <child>
+              <object class="ttk.Label" id="lab_icon_b2" named="True">
+                <property name="image">null_30.png</property>
+                <layout manager="grid">
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                  <property name="rowspan">2</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Label" id="lab_txt_b2" named="True">
+                <property name="text" translatable="yes">LAB_B2</property>
+                <layout manager="grid">
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                  <property name="rowspan">2</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Button" id="btn_b2_re" named="True">
+                <property name="command" type="command" cbtype="simple">on_b2_re_clicked</property>
+                <property name="takefocus">true</property>
+                <property name="text" translatable="yes">BTN_RE</property>
+                <property name="width">9</property>
+                <layout manager="grid">
+                  <property name="column">2</property>
+                  <property name="row">0</property>
+                  <property name="sticky">e</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Button" id="btn_b2" named="True">
+                <property name="command" type="command" cbtype="simple">on_b2_clicked</property>
+                <property name="takefocus">true</property>
+                <property name="text" translatable="yes">BTN_NEXT</property>
+                <property name="width">9</property>
+                <layout manager="grid">
+                  <property name="column">2</property>
+                  <property name="row">1</property>
+                  <property name="sticky">e</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="frame_b3" named="True">
+            <property name="height">67</property>
+            <property name="width">380</property>
+            <layout manager="grid">
+              <property name="row">5</property>
+              <property name="sticky">ew</property>
+            </layout>
+            <containerlayout manager="grid">
+              <property name="anchor">w</property>
+              <property name="propagate">false</property>
+              <property type="col" id="1" name="weight">1</property>
+            </containerlayout>
+            <child>
+              <object class="ttk.Label" id="lab_icon_b3" named="True">
+                <property name="image">null_30.png</property>
+                <layout manager="grid">
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Label" id="lab_txt_b3" named="True">
+                <property name="text" translatable="yes">LAB_B3</property>
+                <layout manager="grid">
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="frame_c1" named="True">
+            <property name="height">67</property>
+            <property name="width">380</property>
+            <layout manager="grid">
+              <property name="row">6</property>
+              <property name="sticky">ew</property>
+            </layout>
+            <containerlayout manager="grid">
+              <property name="anchor">w</property>
+              <property name="propagate">false</property>
+              <property type="col" id="1" name="weight">1</property>
+            </containerlayout>
+            <child>
+              <object class="ttk.Label" id="lab_icon_c1" named="True">
+                <property name="image">null_30.png</property>
+                <layout manager="grid">
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                  <property name="rowspan">2</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Label" id="lab_txt_c1" named="True">
+                <property name="text" translatable="yes">LAB_C1</property>
+                <layout manager="grid">
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                  <property name="rowspan">2</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Combobox" id="cbox_c1" named="True">
+                <property name="state">readonly</property>
+                <property name="takefocus">true</property>
+                <property name="textvariable">string:selected_ip</property>
+                <property name="width">14</property>
+                <layout manager="grid">
+                  <property name="column">2</property>
+                  <property name="pady">0 1</property>
+                  <property name="row">0</property>
+                  <property name="sticky">e</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Button" id="btn_c1" named="True">
+                <property name="command" type="command" cbtype="simple">on_c1_clicked</property>
+                <property name="takefocus">true</property>
+                <property name="text" translatable="yes">BTN_NEXT</property>
+                <property name="width">9</property>
+                <layout manager="grid">
+                  <property name="column">2</property>
+                  <property name="row">1</property>
+                  <property name="sticky">e</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="frame_c2" named="True">
+            <property name="height">67</property>
+            <property name="width">380</property>
+            <layout manager="grid">
+              <property name="row">7</property>
+              <property name="sticky">ew</property>
+            </layout>
+            <containerlayout manager="grid">
+              <property name="anchor">w</property>
+              <property name="propagate">false</property>
+              <property type="col" id="1" name="weight">1</property>
+            </containerlayout>
+            <child>
+              <object class="ttk.Label" id="lab_icon_c2" named="True">
+                <property name="image">null_30.png</property>
+                <layout manager="grid">
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Label" id="lab_txt_c2" named="True">
+                <property name="text" translatable="yes">LAB_C2</property>
+                <layout manager="grid">
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                  <property name="sticky">w</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Labelframe" id="frame_r" named="True">
+        <property name="height">700</property>
+        <property name="text" translatable="yes">TITLE_NOTE</property>
+        <property name="width">640</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="row">0</property>
+          <property name="rowspan">2</property>
+          <property name="sticky">nsew</property>
+        </layout>
+        <containerlayout manager="grid">
+          <property name="propagate">false</property>
+          <property type="col" id="0" name="weight">1</property>
+          <property type="row" id="0" name="weight">1</property>
+        </containerlayout>
+        <child>
+          <object class="tk.Text" id="text_r" named="True">
+            <property name="height">24</property>
+            <property name="padx">6</property>
+            <property name="pady">6</property>
+            <property name="width">63</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="row">0</property>
+              <property name="sticky">nsew</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Scrollbar" id="scrollbar_1" named="True">
+            <property name="orient">vertical</property>
+            <layout manager="grid">
+              <property name="column">1</property>
+              <property name="row">0</property>
+              <property name="sticky">nsew</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
