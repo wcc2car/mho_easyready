@@ -669,6 +669,7 @@ def creat_host_start_bat():
         'start /B "" "%APACHE_SERVER_ROOT%\\bin\\httpd.exe"',
         'cd /D "%GP%MHServerEMU\\"',
         'start /B "" MHServerEmu.exe',
+        'start /B "" "http://localhost:8080/Dashboard/"'
     ]
 
     file_path = f"{mho.game_path}\\#Host_Start({glb_vars.selected_ip}).bat"
