@@ -1,10 +1,12 @@
 import ctypes
 try:
-    ctypes.windll.shcore.SetProcessDpiAwareness(2)
-except Exception:
+    shcore = ctypes.windll.shcore
+    getattr(shcore, "SetProcessDpiAwareness")(2)
+except (AttributeError, OSError):
     try:
-        ctypes.windll.user32.SetProcessDPIAware()
-    except Exception:
+        user32 = ctypes.windll.user32
+        getattr(user32, "SetProcessDPIAware")()
+    except (AttributeError, OSError):
         pass
 
 import os
@@ -192,7 +194,7 @@ TRANSLATIONS = {
         ########################################################################
         "MSG_C2_1": ">網路伺服器等同開放的單機版, 單機版能作的它都能作, 甚至能在網路伺服器上多開遊戲端.\n 差別只在不能隨意關閉 MHServerEmu/Apache 視窗, 因為可能還有別人連線在玩.\n\n",
         "MSG_C2_2": ">這台 MHServerEmu 區網伺服器 IP 是: %s\n\n",
-        "MSG_C2_3": ">已於{遊戲資料夾}建立以下 bat 檔:\n  #Host_Play(IP).bat, 執行就啟動伺服器+遊戲端 (和單機版用法完全相同).\n",
+        "MSG_C2_3": ">已於{遊戲資料夾}建立以下 bat 檔:\n  #Host_Play(IP).bat, 執行就啟動伺服器與遊戲端 (和單機版用法完全相同).\n",
         "MSG_C2_4": "  #Host_Start(IP).bat, 只啟動伺服器, 不執行遊戲端, 也沒有更新功能.\n  #Lan_Play(IP).bat, 只執行遊戲端, 其它電腦也該使用.\n",
         "MSG_C2_5": "\n>其它電腦可以參考功能 1-3 的圖片說明, 修改現有的 bat 檔, 連線到這台網路伺服器. (建議直接 copy #Lan_Play(IP).bat)\n",
         "MSG_C2_6": "\n>伺服器的部份設置會影響連線遊戲端所見: 成就語言檔, 商城, add_G, 新聞...\n",
