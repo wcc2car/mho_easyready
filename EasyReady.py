@@ -652,7 +652,7 @@ def create_online_play_bat():
 
 
 #######################################################
-#  C2 建立 Host_Stat 批次檔
+#  C2 建立 Host_Start 批次檔
 def creat_host_start_bat():
 
     content = [
@@ -685,7 +685,6 @@ def update_ini_host_ip():
     ini = glb_vars.ini
 
     mtx = {
-        "NewsUrl": f"http://{ip}/news/index.html",
         "HomePageUrl": f"http://{ip}/store/index.html",
         "HomeBannerPageUrl": f"http://{ip}/store/images/banner.png",
         "HeroesBannerPageUrl": f"http://{ip}/store/images/banner.png",
@@ -699,6 +698,7 @@ def update_ini_host_ip():
     }
 
     ini.set("Frontend", "PublicAddress", ip, save=False)
+    ini.set("PlayerManager", "NewsUrl", f"http://{ip}/news/index.html", save=False)
     for k, v in mtx.items():
         ini.set("MTXStore", k, v, save=False)
     ini.save()
