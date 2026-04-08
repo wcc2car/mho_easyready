@@ -1,10 +1,10 @@
 Designed to help those who are "Not Prepared" complete the Marvel Heroes Omega and MHServerEMU installation.
 
--This is experimental software, not extensively tested, and compatibility is not guaranteed.
--Tested only on Windows 10 x64 (Traditional Chinese edition).
--Microsoft Defender may flag this program as suspicious.
--The executable only supports Windows 8.1 or later (x64 only)
--supports Traditional Chinese and English bilingual interface
+- This is experimental software, not extensively tested, and compatibility is not guaranteed.
+- Tested only on Windows 10 x64 (Traditional Chinese edition).
+- Microsoft Defender may flag this program as suspicious.
+- The executable only supports Windows 8.1 or later (x64 only)
+- supports Traditional Chinese and English bilingual interface
 
 This is my "Python Newbie Village Leveling Loot" :)
 
