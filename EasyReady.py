@@ -631,16 +631,7 @@ def create_online_play_bat():
         "",
     ]
 
-    if glb_vars.selected_func == "a":
-        for server, url in server_list.items():
-            file = f"{mho.game_path}\\_Play_{server}.bat"
-            cmd_line = f'start "" /min "{mho.game_exe_path}" ^\n-robocopy -nosteam -siteconfigurl={url}/SiteConfig.xml'
-            full_lines = base_lines + [cmd_line]
-
-            with open(file, "w", encoding="utf-8", newline="\r\n") as f:
-                f.write("\n".join(full_lines))
-
-    elif glb_vars.selected_func == "c":
+    if glb_vars.selected_ip:                   # glb_vars.selected_func == "c" && (glb_vars.selected_ip != None)
         url = glb_vars.selected_ip
 
         file = f"{mho.game_path}\\#Lan_Play({glb_vars.selected_ip}).bat"
@@ -649,11 +640,19 @@ def create_online_play_bat():
 
         with open(file, "w", encoding="utf-8", newline="\r\n") as f:
             f.write("\n".join(full_lines))
+    else:                                               # glb_vars.selected_func == "a" or glb_vars.selected_func  (glb_vars.selected_ip = None)
+        for server, url in server_list.items():
+            file = f"{mho.game_path}\\_Play_{server}.bat"
+            cmd_line = f'start "" /min "{mho.game_exe_path}" ^\n-robocopy -nosteam -siteconfigurl={url}/SiteConfig.xml'
+            full_lines = base_lines + [cmd_line]
+
+            with open(file, "w", encoding="utf-8", newline="\r\n") as f:
+                f.write("\n".join(full_lines))
 
 
 #######################################################
 #  C2 建立 Host_Start 批次檔
-def creat_host_start_bat():
+def create_host_start_bat():
 
     content = [
         "@echo off",
@@ -1262,7 +1261,7 @@ def workflow_c2():
     update_ini_host_ip()                             # 更改 ConfigOverride.ini 裡的 IP/URL
     create_host_play_bat()                           # 建立 #Host_Play(ip).bat
     create_online_play_bat()                         # 建立 #Lan_Play(ip).bat
-    creat_host_start_bat()                           # 建立 #Host_sStart(ip).bat
+    create_host_start_bat()                           # 建立 #Host_sStart(ip).bat
 
     gui.logger.log("MSG_C2_3", tag="mark")
     gui.logger.log("MSG_C2_4", tag="mark")
@@ -1368,16 +1367,16 @@ def workflow_a3():
     gui.logger.log("https://pastebin.com/cWAyA9kt", link="https://pastebin.com/cWAyA9kt", raw=True)
     gui.logger.log("\n ", raw=True)
     gui.logger.log("https://www.reddit.com/r/marvelheroes/comments/1lgwf31/mh_emu_info_private_server_list", link="https://www.reddit.com/r/marvelheroes/comments/1lgwf31/mh_emu_info_private_server_list/", raw=True)
+
     gui.logger.log("MSG_A3_3", mho.game_path, tag="green")
     gui.logger.log("MSG_A3_4", tag="mark")
-
     gui.logger.log("MSG_A3_5")
     gui.logger.log("MSG_A3_6")
     gui.logger.log_image("./images/server.png", pad_x=8)
 
     gui.step_manager.set_status("frame_a3", "ok")
+    create_online_play_bat()                           # 建立 online 用的 play.bat 群
     if glb_vars.selected_func == "a":
-        create_online_play_bat()                       # 建立 online 用的 play.bat 群
         gui.logger.log("\n", raw=True)
         gui.logger.log("MSG_A3_7", tag="highlight")
     else:
