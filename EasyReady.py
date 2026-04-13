@@ -33,6 +33,7 @@ class AppConfig:
         self.outbound_ip = None                       # 主要 IP
         self.public_ip = None                         # 外網 IP
         self.selected_ip = None                       # 選中的 IP
+        self.emu_name = "MHServerEmu-1.0.1.zip"       # 指定 emu 的檔名
 
 glb_vars = AppConfig()  # [建立 全域變數集]
 
@@ -980,12 +981,12 @@ def copy_game_sip_files():
 
 
 ##########################################################################
-# B1 檢查 EMU 1.0.zip 與安裝處理   // 回傳值: {True/False, "massage"}   //True:成功, False:失敗  // {False + ""}:ZIP 檔案不存在  // {False + "err_msg"}:作業失敗
+# B1 檢查 EMU 1.0.x zip 與安裝處理   // 回傳值: {True/False, "massage"}   //True:成功, False:失敗  // {False + ""}:ZIP 檔案不存在  // {False + "err_msg"}:作業失敗
 def install_emu_zip():
     try:
         work_dir = mho.game_path
         os.path.isdir(work_dir)
-        zip_path = os.path.join(work_dir, "MHServerEmu-1.0.0.zip")
+        zip_path = os.path.join(work_dir, glb_vars.emu_name)
 
         if not os.path.isfile(zip_path):
             return False, ""                                               # 回傳 {False, ""} = 無 ZIP 檔
@@ -1020,10 +1021,10 @@ def install_emu_zip():
 
 
 ##########################################################################
-# b1 安裝 EMU 1.0.zip , 與結果處理
+# b1 安裝 EMU 1.0.x zip , 與結果處理
 def post_install_emu_zip():
 
-    result, err_msg = install_emu_zip()                       # 回傳值: {True/False, "massage"}, {False + ""}: ZIP 檔案不存在, {False + "err_msg"}: 作業失敗
+    result, err_msg = install_emu_zip()                      # 回傳值: {True/False, "massage"}, {False + ""}: ZIP 檔案不存在, {False + "err_msg"}: 作業失敗
     if result:
         gui.step_manager.set_status("frame_b1", "ok")
         init_ini()                                           # 建立 class ini, 並初始化內容值
@@ -1232,7 +1233,7 @@ def on_next_clicked(step_id):
         on_next_frame_handling(step_id)
         workflow_b1()
     elif step_id == "frame_b1":
-        post_install_emu_zip()                  # 安裝 EMU_ZIP
+        post_install_emu_zip()                  # 安裝 EMU_ZIP, glb_vars.emu_name 是 EMU 檔名
         if glb_vars.b1_result:                  # b1 通關條件: EMU_ZIP 正確的處理
             on_next_frame_handling(step_id)
             workflow_b2()
@@ -1348,7 +1349,7 @@ def workflow_b2():
 
 
 #############################################################################
-# 方案流程(B1) Offline
+# 方案流程(B1) Offline, glb_vars.emu_name 是 EMU 檔名
 def workflow_b1():
     gui.logger.log("MSG_B1_1", tag="mark")
     gui.logger.log("https://github.com/Crypto137/MHServerEmu/releases/download/1.0.1/MHServerEmu-1.0.1.zip", link="https://github.com/Crypto137/MHServerEmu/releases/download/1.0.1/MHServerEmu-1.0.1.zip", tag="mark", raw=True)
