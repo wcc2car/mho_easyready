@@ -621,6 +621,7 @@ def create_online_play_bat():
         "COA": "mho.councilofancients.com",
         "SecretWars": "the-secret-wars.com",
         "OmegaNode": "play.omeganode.org",
+        "MH_Reborn": "mhreborn.com",
     }
 
     base_lines = [
@@ -1350,7 +1351,7 @@ def workflow_b2():
 # 方案流程(B1) Offline
 def workflow_b1():
     gui.logger.log("MSG_B1_1", tag="mark")
-    gui.logger.log("https://github.com/Crypto137/MHServerEmu/releases/download/1.0.0/MHServerEmu-1.0.0.zip", link="https://github.com/Crypto137/MHServerEmu/releases/download/1.0.0/MHServerEmu-1.0.0.zip", tag="mark", raw=True)
+    gui.logger.log("https://github.com/Crypto137/MHServerEmu/releases/download/1.0.1/MHServerEmu-1.0.1.zip", link="https://github.com/Crypto137/MHServerEmu/releases/download/1.0.1/MHServerEmu-1.0.1.zip", tag="mark", raw=True)
     gui.logger.log("MSG_B1_2", tag="mark")
     gui.logger.log("MSG_B1_3")
     gui.logger.log("MSG_B1_4")
@@ -1463,9 +1464,10 @@ if __name__ == "__main__":                                 # 指定本程式是�
         is_required_port_free=is_required_port_free        # 傳 is_required_port_free 給 AppUI (跨檔案)
     )
 
-    env.detect_all()                                                 # 偵測電腦狀況
+    env.detect_all()                                       # 偵測電腦狀況
     root = gui.tk01
-    root.title("[Marvel Heroes Omega 2.16a]  EasyReady v0.995")
+    date = datetime_string(1)
+    root.title(f"[Marvel Heroes Omega 2.16a]  EasyReady v0.995  ({date})")
     icon_path = resource_path("./images/EasyReady.ico")
     root.iconbitmap(icon_path)
     root.mainloop()
