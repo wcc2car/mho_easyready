@@ -1,5 +1,4 @@
 Designed to help those who are "Not Prepared" complete the Marvel Heroes Omega and MHServerEMU installation.
-(用來協助"你還沒有準備好"的人完成安裝 MarvelHeroes Omega 遊戲和 MHServerEMU 伺服器.)
 
 - This is experimental software, not extensively tested, and compatibility is not guaranteed.
 - Tested only on Windows 10 x64 (Traditional Chinese edition).
